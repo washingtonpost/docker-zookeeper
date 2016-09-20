@@ -3,6 +3,9 @@ services:
   zookeeper:
     image: washpost/zookeeper:3.4.9
     restart: always
+    volumes:
+      - "/data/zookeeper/snapshots:/opt/zookeeper/snapshots"
+      - "/data/zookeeper/transactions:/opt/zookeeper/transactions"
     {%- if logging is defined and logging.driver is defined and logging.driver == "awslogs" %}
     logging: 
       driver: awslogs
