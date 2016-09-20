@@ -16,7 +16,8 @@ RUN wget http://apache.claz.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeep
     tar -xzf /tmp/zookeeper-${ZOOKEEPER_VERSION}.tar.gz -C /opt && \
     rm -f /tmp/zookeeper-${ZOOKEEPER_VERSION}.tar.gz && \
     ln -s /opt/zookeeper-${ZOOKEEPER_VERSION} /opt/zookeeper && \
-    mkdir /opt/zookeeper/transactions /opt/zookeeper/snapshots
+    mkdir /opt/zookeeper/transactions /opt/zookeeper/snapshots && \
+    ln -sf /dev/stdout /opt/zookeeper/zookeeper.out
 
 WORKDIR /opt/exhibitor
 COPY exhibitor-${EXHIBITOR_VERSION}/exhibitor.sh ./exhibitor.sh
