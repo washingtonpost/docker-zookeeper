@@ -1,0 +1,26 @@
+version: "2"
+services:
+  memcached:
+    image: washpost/zookeeper:3.4.9
+    restart: always
+    {%- if logging is defined and logging.driver is defined and logging.driver == "awslogs" %}
+    logging: 
+      driver: awslogs
+      options:
+        awslogs-group: {{ logging.meta.group }}
+        awslogs-stream: zookeeper-${NODE_ID}
+    {%- endif %}
+    environment:
+      CLUSTER_SIZE: ${CLUSTER_SIZE}
+    {%- if S3_BUCKET is defined %}
+      S3_BUCKET: "{{ S3_BUCKET }}"
+    {%- endif %}
+    {%- if S3_PREFIX is defined %}
+      S3_PREFIX: "{{ S3_PREFIX }}"
+    {%- endif %}
+    {%- if CONFIG_TYPE is defined %}
+      CONFIG_TYPE: "{{ CONFIG_TYPE}}"
+    {%- endif %}
+    {%- if ZK_PASSWORD is defined %}
+      ZK_PASSWORD: "{{ ZK_PASSWORD }}"
+    {%- endif %}
