@@ -1,6 +1,6 @@
 version: "2"
 services:
-  memcached:
+  zookeeper:
     image: washpost/zookeeper:3.4.9
     restart: always
     {%- if logging is defined and logging.driver is defined and logging.driver == "awslogs" %}
@@ -11,7 +11,7 @@ services:
         awslogs-stream: zookeeper-${NODE_ID}
     {%- endif %}
     environment:
-      CLUSTER_SIZE: ${CLUSTER_SIZE}
+      CLUSTER_SIZE: {{ CLUSTER_SIZE }}
     {%- if S3_BUCKET is defined %}
       S3_BUCKET: "{{ S3_BUCKET }}"
     {%- endif %}

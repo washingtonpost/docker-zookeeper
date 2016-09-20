@@ -48,7 +48,7 @@ fi
 
 
 if [[ -n ${ZK_PASSWORD} ]]; then
-	SECURITY="--security web.xml --realm Zookeeper:realm --remoteauth basic:zk"
+	SECURITY="--security secure-web.xml --realm Zookeeper:realm --remoteauth basic:zk"
 	echo "zk: ${ZK_PASSWORD},zk" > realm
 fi
 

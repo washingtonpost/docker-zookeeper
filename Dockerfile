@@ -22,6 +22,7 @@ WORKDIR /opt/exhibitor
 COPY exhibitor-${EXHIBITOR_VERSION}/exhibitor.sh ./exhibitor.sh
 COPY exhibitor-${EXHIBITOR_VERSION}/exhibitor-standalone.jar ./exhibitor-standalone.jar
 COPY exhibitor-${EXHIBITOR_VERSION}/web.xml ./web.xml
+COPY exhibitor-${EXHIBITOR_VERSION}/secure-web.xml ./secure-web.xml
 
 EXPOSE 8181
 
