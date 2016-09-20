@@ -12,6 +12,7 @@ services:
     {%- endif %}
     environment:
       CLUSTER_SIZE: {{ CLUSTER_SIZE }}
+      HOSTNAME: ${INSTANCE_IP}
     {%- if S3_BUCKET is defined %}
       S3_BUCKET: "{{ S3_BUCKET }}"
     {%- endif %}
