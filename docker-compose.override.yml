@@ -1,0 +1,8 @@
+version: '2'
+services:
+  zookeeper:
+    build: .
+    environment:
+      CLUSTER_SIZE: 1
+      CONFIG_TYPE: file
+      ZK_PASSWORD: 34b2884b01276d72bdce72300d12c3ccd00eb3db95529380a9

@@ -1,0 +1,6 @@
+version: '2'
+services:
+  zookeeper:
+    container_name: zookeeper 
+    ports:
+      - "8181:8181"
