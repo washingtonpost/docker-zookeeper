@@ -1,10 +1,13 @@
 cluster:
   name: ${CLUSTER_NAME}
   search_path:
-    - ../docker-memcached/cloud-compose/templates
-    - ../docker-memcached
+    - ../docker-zookeeper/cloud-compose/templates
+    - ../docker-zookeeper
   environment:
-    MEMCACHED_EXTRA_OPTIONS: "-I 1m"
+    CONFIG_TYPE: s3
+    CLUSTER_SIZE: 5
+    S3_BUCKET: wp-arc-config
+    S3_PREFIX: exhibitor-zk-potomac 
   logging:
     driver: awslogs 
     meta:
@@ -15,8 +18,8 @@ cluster:
     security_groups: ${SECURITY_GROUP_ID}
     ebs_optimized: false
     instance_type: t2.medium
-    keypair: drydock
-    instance_policy: '{ "Statement": [ { "Action": [ "ec2:CreateSnapshot", "ec2:CreateTags", "ec2:DeleteSnapshot", "ec2:DescribeInstances", "ec2:DescribeSnapshotAttribute", "ec2:DescribeSnapshots", "ec2:DescribeVolumeAttribute", "ec2:DescribeVolumeStatus", "ec2:DescribeVolumes", "ec2:ModifySnapshotAttribute", "ec2:ResetSnapshotAttribute", "logs:CreateLogStream", "logs:PutLogEvents" ], "Effect": "Allow", "Resource": [ "*" ] } ] }'
+    keypair: ${KEYPAIR} 
+    instance_policy: '{ "Statement": [ { "Action": [ "s3:AbortMultipartUpload", "s3:DeleteObject", "s3:GetBucketAcl", "s3:GetBucketPolicy", "s3:GetObject", "s3:GetObjectAcl", "s3:ListBucket", "s3:ListBucketMultipartUploads", "s3:ListMultipartUploadParts", "s3:PutObject", "s3:PutObjectAcl", "logs:CreateLogStream", "logs:PutLogEvents" ], "Effect": "Allow", "Resource": [ "arn:aws:s3:::wp-arc-config/*", "arn:aws:s3:::wp-arc-config" ] }, { "Action": [ "logs:CreateLogStream", "logs:PutLogEvents" ], "Effect": "Allow", "Resource": "*" } ] }'
     volumes:
       - name: root
         size: 30G
@@ -31,6 +34,13 @@ cluster:
               size: 19G
             - name: metadata
               size: 900M 
+      - name: data
+        size: 100G
+        block: /dev/xvdc
+        file_system: ext4
+        meta:
+          format: true
+          mount: /data/zookeeper
     tags:
       datadog: monitored
     nodes:
@@ -43,6 +53,12 @@ cluster:
       - id: 2
         ip: ${CLUSTER_NODE_2_IP}
         subnet: ${CLUSTER_NODE_2_SUBNET}
+      - id: 3
+        ip: ${CLUSTER_NODE_3_IP}
+        subnet: ${CLUSTER_NODE_3_SUBNET}
+      - id: 4
+        ip: ${CLUSTER_NODE_4_IP}
+        subnet: ${CLUSTER_NODE_4_SUBNET}
 datadog:
   name: ${CLUSTER_NAME}
   notify: 
