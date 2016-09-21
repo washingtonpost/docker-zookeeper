@@ -9,5 +9,4 @@ instances:
 EOF
 # datadog.start
 sh -c "sed 's/api_key:.*/api_key: {{DATADOG_API_KEY}}/' /etc/dd-agent/datadog.conf.example > /etc/dd-agent/datadog.conf"
-echo 'bind_host: 0.0.0.0' >> /etc/dd-agent/datadog.conf
 service datadog-agent restart
