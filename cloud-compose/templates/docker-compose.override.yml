@@ -3,6 +3,7 @@ services:
   zookeeper:
     image: washpost/zookeeper:3.4.9
     restart: always
+    network_mode: host
     volumes:
       - "/data/zookeeper/snapshots:/opt/zookeeper/snapshots"
       - "/data/zookeeper/transactions:/opt/zookeeper/transactions"

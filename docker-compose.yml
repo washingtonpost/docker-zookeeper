@@ -2,8 +2,3 @@ version: '2'
 services:
   zookeeper:
     container_name: zookeeper 
-    ports:
-      - "8181:8181"
-      - "3888:3888"
-      - "2888:2888"
-      - "2181:2181"
