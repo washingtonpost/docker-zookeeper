@@ -17,6 +17,9 @@ services:
     environment:
       CLUSTER_SIZE: {{ CLUSTER_SIZE }}
       HOSTNAME: ${INSTANCE_IP}
+    {%- if AWS_REGION is defined %}
+      AWS_REGION: "{{ AWS_REGION }}"
+    {%- endif %}
     {%- if S3_BUCKET is defined %}
       S3_BUCKET: "{{ S3_BUCKET }}"
     {%- endif %}
