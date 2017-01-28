@@ -29,6 +29,8 @@ services:
     {%- if CONFIG_TYPE is defined %}
       CONFIG_TYPE: "{{ CONFIG_TYPE}}"
     {%- endif %}
-    {%- if ZK_PASSWORD is defined %}
+    {%- if secrets.ZK_PASSWORD is defined %}
+      ZK_PASSWORD: ${ZK_PASSWORD}
+    {%- elif ZK_PASSWORD is defined %}
       ZK_PASSWORD: "{{ ZK_PASSWORD }}"
     {%- endif %}
